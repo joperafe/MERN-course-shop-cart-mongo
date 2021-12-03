@@ -10,7 +10,8 @@ router.get(
   "/",
   asyncHandler(async (req, res) => {
     const products = await Product.find({});
-
+    // res.status(401);
+    // throw new Error("Not authorized");
     res.json(products);
   })
 );
@@ -21,6 +22,7 @@ router.get(
 router.get(
   "/:id",
   asyncHandler(async (req, res) => {
+    console.log("params id server", req.params.id, parseInt(req.params.id, 10));
     const product = await Product.findById(req.params.id);
     console.log(product);
 
