@@ -9,7 +9,7 @@ const reducer = combineReducers({
   productDetails: productDetailsReducer,
   cart: cartReducer,
 });
-console.log("local storage", localStorage);
+// console.log("local storage", localStorage);
 
 // const cartItemsFromStorage = localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")) : [];
 const cartItemsFromStorage = [];
