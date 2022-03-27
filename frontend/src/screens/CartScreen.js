@@ -8,7 +8,6 @@ import Message from "../components/Message";
 const CartScreen = ({ match, location, history }) => {
   const productId = match.params.id;
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
-  console.log("prodid", productId, qty);
 
   const dispatch = useDispatch();
 
@@ -52,8 +51,8 @@ const CartScreen = ({ match, location, history }) => {
                     <Col md={2}>
                       <Form.Control
                         as="select"
-                        value={qty}
-                        onChange={(e) => dispatch(addToCart(Number(e.target.value)))}
+                        value={item.qty}
+                        onChange={(e) => dispatch(addToCart(item.product, Number(e.target.value)))}
                       >
                         {[...Array(item.countInStock).keys()].map((x) => {
                           return (
