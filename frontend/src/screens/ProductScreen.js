@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { listProductDetails } from "../actions/productActions";
 import Rating from "../components/Rating";
 import Loader from "../components/Loader";
-import Message from "../components/Message";
 
 const ProductScreen = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -44,8 +43,6 @@ const ProductScreen = ({ history, match }) => {
       {loading ? (
         <Loader />
       ) : error ? (
-        // <Message variant="danger">{error}</Message>
-        // *************************
         // !! NO CONNECTION FIX
         <Row>
           <Col md={6}>
