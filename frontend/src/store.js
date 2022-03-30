@@ -8,6 +8,9 @@ import {
   userLoginReducer,
   userRegisterReducer,
   userUpdateProfileReducer,
+  userListReducer,
+  userDeleteReducer,
+  userUpdateReducer,
 } from "./reducers/usersReducers";
 import { orderCreateReducer, orderDetailsReducer, orderListMyReducer, orderPayReducer } from "./reducers/orderReducers";
 
@@ -19,6 +22,9 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  userList: userListReducer,
+  userDelete: userDeleteReducer,
+  userUpdate: userUpdateReducer,
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
@@ -30,9 +36,9 @@ const userInfoFromStorage = localStorage.getItem("userInfo") ? JSON.parse(localS
 const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
   ? JSON.parse(localStorage.getItem("shippingAddress"))
   : {};
-const paymentMethodFromStorage = localStorage.getItem("paymentMethod")
-  ? JSON.parse(localStorage.getItem("shippingAddress"))
-  : {};
+// const paymentMethodFromStorage = localStorage.getItem("paymentMethod")
+// ? JSON.parse(localStorage.getItem("shippingAddress"))
+// : {};
 
 const initialState = {
   cart: {
