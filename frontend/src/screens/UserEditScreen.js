@@ -36,7 +36,7 @@ const UserEditScreen = ({ match, history }) => {
         setIsAdmin(user.isAdmin);
       }
     }
-  }, [dispatch, user, userId, successUpdate]);
+  }, [dispatch, user, userId, successUpdate, history]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -46,7 +46,7 @@ const UserEditScreen = ({ match, history }) => {
 
   return (
     <>
-      <Link to="/admin/userList" className="btn btn-light my-3">
+      <Link to="/admin/userlist" className="btn btn-light my-3">
         Go Back
       </Link>
       <FormContainer>
@@ -93,12 +93,6 @@ const UserEditScreen = ({ match, history }) => {
             </Button>
           </Form>
         )}
-
-        {/* <Row className="py-3">
-          <Col>
-            Have an account? <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}> Login </Link>
-          </Col>
-        </Row> */}
       </FormContainer>
     </>
   );
