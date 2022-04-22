@@ -79,6 +79,8 @@ const ProductEditScreen = ({ match, history }) => {
     dispatch(updateProduct({ _id: productId, name, price, image, brand, category, countInStock, description }));
   };
 
+  console.log(image);
+
   return (
     <>
       <Link to="/admin/productlist" className="btn btn-light my-3">
@@ -114,18 +116,22 @@ const ProductEditScreen = ({ match, history }) => {
               ></Form.Control>
             </Form.Group>
 
-            {/* <Form.Group controlId="image">
+            <Form.Group controlId="image">
               <Form.Label>Image</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter image url"
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
-              <Form.File id="image-file" label="Choose File" custom onChange={uploadFileHandler}></Form.File>
+              />
+              {/* Some witchcraft here */}
+              {/* <Form.File id="image-file" label="Choose File" custom onChange={uploadFileHandler}></Form.File> */}
               {uploading && <Loader />}
-            </Form.Group> */}
-
+            </Form.Group>
+            <Form.Group controlId="formFileMultiple">
+              <Form.Label>Image</Form.Label>
+              <Form.Control type="file" onChange={(e) => setImage(e.target.value)} multiple />
+            </Form.Group>
             <Form.Group controlId="brand">
               <Form.Label>Brand</Form.Label>
               <Form.Control
