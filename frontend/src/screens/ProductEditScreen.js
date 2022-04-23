@@ -68,7 +68,7 @@ const ProductEditScreen = ({ match, history }) => {
       setImage(data);
       setUploading(false);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setUploading(false);
     }
   };
@@ -79,7 +79,7 @@ const ProductEditScreen = ({ match, history }) => {
     dispatch(updateProduct({ _id: productId, name, price, image, brand, category, countInStock, description }));
   };
 
-  console.log(image);
+  // console.log(image);
 
   return (
     <>
