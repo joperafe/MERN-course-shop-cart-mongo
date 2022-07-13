@@ -18,6 +18,7 @@ import UserEditScreen from "./screens/UserEditScreen";
 import ProductListScreen from "./screens/ProductLisScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import OrderListScreen from "./screens/OrderListScreen";
+import NomadicFormScreen from "./screens/NomadicForm/NomadicFormScreen";
 
 const App = () => {
   return (
@@ -44,6 +45,7 @@ const App = () => {
           <Route path="/page/:pageNumber" component={HomeScreen} exact />
           <Route path="/search/:keyword/page/:pageNumber" component={HomeScreen} exact />
           <Route path="/" component={HomeScreen} exact />
+          <Route path="/nomadic-energy" component={NomadicFormScreen} exact />
         </Container>
       </main>
       <Footer />

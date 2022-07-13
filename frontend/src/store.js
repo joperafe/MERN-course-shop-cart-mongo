@@ -28,6 +28,7 @@ import {
   orderListReducer,
   orderPayReducer,
 } from "./reducers/orderReducers";
+import { nomadicFormReducer } from "./reducers/nomadicFormReducer";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -51,6 +52,7 @@ const reducer = combineReducers({
   orderDeliver: orderDeliverReducer,
   orderListMy: orderListMyReducer,
   orderList: orderListReducer,
+  nomadicForm: nomadicFormReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")) : [];
