@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Button, ButtonGroup, ToggleButton } from "react-bootstrap";
+import { Button, ButtonGroup, Form, ToggleButton } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { ADD_APPLIANCE, REMOVE_APPLIANCE, TOTAL_WATTAGE } from "../../../constants/nomadicFormConstants";
+import {
+  ADD_APPLIANCE,
+  REMOVE_APPLIANCE,
+  TOTAL_WATTAGE,
+  SET_VANLIFE_TIME,
+  SET_VANLIFE_FREQUENCY,
+  SET_VANLIFE_USAGE,
+} from "../../../constants/nomadicFormConstants";
 import checkboxesPowerUsage from "../../../nomadicData/data/nomadicAppliances";
+import { vanlifeTimeData, vanlifeFrequencyData, vanlifeTypicalUsageData } from "../../../nomadicData/data/vanlifeTime";
 
 const PowerUsageScreen = () => {
   const nomadicForm = useSelector((state) => state.nomadicForm);
   const { appliancesList, inverterNeeded } = nomadicForm;
-  console.log("appliancesList ? ", appliancesList);
   const dispatch = useDispatch();
 
   const [checkedItems, setCheckedItems] = useState({});
@@ -19,7 +26,6 @@ const PowerUsageScreen = () => {
   ];
 
   useEffect(() => {
-    console.log("appliances ", appliancesList);
     dispatch({ type: TOTAL_WATTAGE });
   }, [appliancesList, dispatch]);
 
@@ -65,6 +71,7 @@ const PowerUsageScreen = () => {
       payload: applianceName,
     });
   };
+
   return (
     <div>
       <h3>Power usage</h3>
@@ -88,6 +95,7 @@ const PowerUsageScreen = () => {
           </ul>
         </div>
       </div>
+
       <div>
         <div>
           Do you have any other appliances not detailed on the previous list? If yes, please detail these below and
@@ -98,12 +106,14 @@ const PowerUsageScreen = () => {
           <input
             type="text"
             name="otherApplianceName"
+            placeholder="Appliance name"
             onChange={(evt) => setNewAppliance({ ...newAppliance, name: evt.target.value })}
             value={newAppliance.name}
           />
           <input
             type="number"
             name="otherApplianceWattage"
+            placeholder="Wattage"
             onChange={(evt) => setNewAppliance({ ...newAppliance, watts: evt.target.value })}
             value={newAppliance.watts}
           />
@@ -130,49 +140,93 @@ const PowerUsageScreen = () => {
         </div>
         <div>
           {nomadicForm.appliancesList.map((x) => {
-            if (x.newAppliance) {
-              return (
-                <div>
-                  {x.name}
-                  <Button type="submit" variant="danger" onClick={() => handleRemoveAppliance(x.name)}>
-                    Remove
-                  </Button>
-                </div>
-              );
-            }
+            x.newAppliance && (
+              <div>
+                {x.name}
+                <Button type="submit" variant="danger" onClick={() => handleRemoveAppliance(x.name)}>
+                  Remove
+                </Button>
+              </div>
+            );
           })}
         </div>
         {inverterNeeded && <div style={{ color: "red" }}>You'll need an inverter</div>}
+      </div>
+
+      <div>
+        <div>
+          How long do you plan to keep your campervan or overlander for?* This influences the type of battery we will
+          recommend for you.
+        </div>
+        <div>
+          <Form>
+            <div key={`stacked-radio`} className="mb-3">
+              {vanlifeTimeData.map((item) => {
+                return (
+                  <Form.Check
+                    label={`${item.label} years`}
+                    name="group-1"
+                    type="radio"
+                    id={item.key}
+                    onChange={() => dispatch({ type: SET_VANLIFE_TIME, payload: item.label })}
+                  />
+                );
+              })}
+            </div>
+          </Form>
+        </div>
+      </div>
+
+      <div>
+        <div>
+          How often will you use your campervan or overlander?* This influences the size of battery we will recommend
+          for you. Pick whichever option most closely matches your usage.
+        </div>
+        <div>
+          <Form>
+            <div key={`stacked-radio`} className="mb-3">
+              {vanlifeFrequencyData.map((item) => {
+                return (
+                  <Form.Check
+                    label={item.label}
+                    name="group-1"
+                    type="radio"
+                    id={item.key}
+                    onChange={() => dispatch({ type: SET_VANLIFE_FREQUENCY, payload: item.label })}
+                  />
+                );
+              })}
+            </div>
+          </Form>
+        </div>
+      </div>
+
+      <div>
+        <div>
+          Which statement best describes your typical usage?* Please note: including shore hook up in your system will
+          increase your total cost, as it requires a MultiPlus which is an inverter and a battery charger in one. This
+          also has a knock on effect to associated components.
+        </div>
+        <div>
+          <Form>
+            <div key={`stacked-radio`} className="mb-3">
+              {vanlifeTypicalUsageData.map((item) => {
+                return (
+                  <Form.Check
+                    label={item.label}
+                    name="group-1"
+                    type="radio"
+                    id={item.key}
+                    onChange={() => dispatch({ type: SET_VANLIFE_USAGE, payload: item.label })}
+                  />
+                );
+              })}
+            </div>
+          </Form>
+        </div>
       </div>
     </div>
   );
 };
 
 export default PowerUsageScreen;
-
-// Lights - 12V (~12W)
-// Phone charger - 12V (~10W)
-// iPad or tablet charger - 12V (~20W)
-// Fridge - 12V (~48W)
-// Water pump - 12V (~15W)
-// Fan (e.g. MaxxAir Maxxfan) - 12V (~60W)
-// Diesel/gas powered heater/boiler (electric ignition) - 12V (~40W)
-// Truma Combi 4e - electric (~15W)
-// WiFi router / dongle - 12V (~2.5W)
-// Laptop charger - 230V (~60W)
-// Radio - 230V (~50W)
-// Blender - 230V (~500W)
-// Toaster - 230V (~700W)
-// Hairdryer - 230V (~1600W)
-// Hair straighteners - 230V (~200W)
-// TV - 230V (~120W)
-// LCD monitor - 230V (~14W)
-// Games console - 230V (~200W)
-// Handheld games console - 230V (~40W)
-// Domestic kettle - 230V (~3000W)
-// Low wattage "caravan kettle" - 230V (~1200W)
-// Projector - 230V (~45W)
-// Speaker - 230V (~10W)
-// Camera charger - 230V (~3W)
-// Drone charger - 230V (~20W)
-// Electric induction hob - 230V (~1800W)

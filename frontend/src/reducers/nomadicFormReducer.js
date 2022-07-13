@@ -6,10 +6,22 @@ import {
   INVERTER_NEEDED,
   AVERAGE_POWER_NEEDED,
   TOTAL_WATTAGE,
+  SET_VANLIFE_TIME,
+  SET_VANLIFE_FREQUENCY,
+  SET_VANLIFE_USAGE,
 } from "../constants/nomadicFormConstants";
 
 export const nomadicFormReducer = (
-  state = { appliancesList: [], totalWattage: 0, otherAppliances: null, inverterNeeded: false, averagePowerNeeded: 0 },
+  state = {
+    appliancesList: [],
+    totalWattage: 0,
+    otherAppliances: null,
+    inverterNeeded: false,
+    averagePowerNeeded: 0,
+    vanlifeTime: null,
+    vanlifeFrequency: null,
+    vanlifeUsage: null,
+  },
   action
 ) => {
   switch (action.type) {
@@ -42,8 +54,6 @@ export const nomadicFormReducer = (
       };
     case ADD_OTHER_APPLIANCES:
       const content = action.payload;
-
-      console.log("content ", content);
       const wattage = content;
       const name = "0";
       return {
@@ -54,6 +64,12 @@ export const nomadicFormReducer = (
       return { ...state, inverterNeeded: !state.inverterNeeded };
     case AVERAGE_POWER_NEEDED:
       return { ...state, averagePowerNeeded: state.averagePowerNeeded + action.payload };
+    case SET_VANLIFE_TIME:
+      return { ...state, vanlifeTime: action.payload };
+    case SET_VANLIFE_FREQUENCY:
+      return { ...state, vanlifeFrequency: action.payload };
+    case SET_VANLIFE_USAGE:
+      return { ...state, vanlifeUsage: action.payload };
     default:
       return state;
   }
