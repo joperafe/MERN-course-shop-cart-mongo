@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, ButtonGroup, Form, ToggleButton } from "react-bootstrap";
+import { Button, ButtonGroup, Form, Image, ToggleButton } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
   ADD_APPLIANCE,
@@ -11,6 +11,7 @@ import {
 } from "../../../constants/nomadicFormConstants";
 import checkboxesPowerUsage from "../../../nomadicData/data/nomadicAppliances";
 import { vanlifeTimeData, vanlifeFrequencyData, vanlifeTypicalUsageData } from "../../../nomadicData/data/vanlifeTime";
+import Imagem1 from "../../../nomadicData/images/Imagem1.png";
 
 const PowerUsageScreen = () => {
   const nomadicForm = useSelector((state) => state.nomadicForm);
@@ -53,6 +54,7 @@ const PowerUsageScreen = () => {
   };
 
   const handleAddAppliance = () => {
+    console.log("new appliance ", newAppliance);
     dispatch({
       type: ADD_APPLIANCE,
       payload: {
@@ -79,9 +81,9 @@ const PowerUsageScreen = () => {
         <div>
           Please tick all of the products you will use in your campervan or overlander. IMPORTANT: if you choose high
           wattage 230V products, this will directly impact the cost and specification of your system. The higher the
-          total wattage, the more expensive the system becomes.* The list is divided into 12V and 230V products. Please
+          total wattage, the more expensive the system becomes. * The list is divided into 12V and 230V products. Please
           note that if you pick any 230V products, this will mean you need an inverter.
-          <i>some image</i>
+          <Image src={Imagem1} fluid rounded />
         </div>
         <div>
           <ul>
@@ -140,17 +142,19 @@ const PowerUsageScreen = () => {
         </div>
         <div>
           {nomadicForm.appliancesList.map((x) => {
-            x.newAppliance && (
-              <div>
-                {x.name}
-                <Button type="submit" variant="danger" onClick={() => handleRemoveAppliance(x.name)}>
-                  Remove
-                </Button>
-              </div>
+            return (
+              x.newAppliance && (
+                <div>
+                  {x.name}
+                  <Button type="submit" variant="danger" onClick={() => handleRemoveAppliance(x.name)}>
+                    Remove
+                  </Button>
+                </div>
+              )
             );
           })}
         </div>
-        {inverterNeeded && <div style={{ color: "red" }}>You'll need an inverter</div>}
+        {inverterNeeded && <div style={{ fontSize: 20, color: "red" }}>You'll need an inverter!</div>}
       </div>
 
       <div>
