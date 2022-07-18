@@ -23,6 +23,9 @@ const Header = () => {
           <LinkContainer to="/">
             <Navbar.Brand>LuShop</Navbar.Brand>
           </LinkContainer>
+          <LinkContainer to="/nomadic-energy">
+            <Navbar.Brand>Nomadic Energy Form</Navbar.Brand>
+          </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Route render={({ history }) => <SearchBox history={history} />} />

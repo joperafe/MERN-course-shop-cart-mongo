@@ -13,6 +13,10 @@ import checkboxesPowerUsage from "../../../nomadicData/data/nomadicAppliances";
 import { vanlifeTimeData, vanlifeFrequencyData, vanlifeTypicalUsageData } from "../../../nomadicData/data/vanlifeTime";
 import Imagem1 from "../../../nomadicData/images/Imagem1.png";
 
+const styleClasses = {
+  questionContainer: { padding: 15 },
+};
+
 const PowerUsageScreen = () => {
   const nomadicForm = useSelector((state) => state.nomadicForm);
   const { appliancesList, inverterNeeded } = nomadicForm;
@@ -77,33 +81,41 @@ const PowerUsageScreen = () => {
   return (
     <div>
       <h3>Power usage</h3>
-      <div>
+      <div style={styleClasses.questionContainer}>
         <div>
-          Please tick all of the products you will use in your campervan or overlander. IMPORTANT: if you choose high
-          wattage 230V products, this will directly impact the cost and specification of your system. The higher the
-          total wattage, the more expensive the system becomes. * The list is divided into 12V and 230V products. Please
-          note that if you pick any 230V products, this will mean you need an inverter.
+          <h5>
+            Please tick all of the products you will use in your campervan or overlander. IMPORTANT: if you choose high
+            wattage 230V products, this will directly impact the cost and specification of your system. The higher the
+            total wattage, the more expensive the system becomes.
+          </h5>
+          <h6>
+            * The list is divided into 12V and 230V products. Please note that if you pick any 230V products, this will
+            mean you need an inverter.
+          </h6>
           <Image src={Imagem1} fluid rounded />
         </div>
         <div>
           <ul>
-            {checkboxesPowerUsage.map((item) => (
-              <div>
-                <label key={item.key}>
-                  <Checkbox name={item.name} checked={checkedItems[item.name]} onChange={handleChange} /> {item.label}
-                </label>
-              </div>
-            ))}
+            {checkboxesPowerUsage.map((item) => {
+              // console.log(item.key, item);
+              return (
+                <div key={item.key}>
+                  <label key={item.key}>
+                    <Checkbox name={item.name} checked={checkedItems[item.name]} onChange={handleChange} /> {item.label}
+                  </label>
+                </div>
+              );
+            })}
           </ul>
         </div>
       </div>
 
-      <div>
-        <div>
+      <div style={styleClasses.questionContainer}>
+        <h5>
           Do you have any other appliances not detailed on the previous list? If yes, please detail these below and
           include the wattage of the product (this can usually be found if you google it, on the product specification)
           and whether it is 12V or 230V.
-        </div>
+        </h5>
         <div>
           <input
             type="text"
@@ -144,7 +156,7 @@ const PowerUsageScreen = () => {
           {nomadicForm.appliancesList.map((x) => {
             return (
               x.newAppliance && (
-                <div>
+                <div key={`${x.name}-new`}>
                   {x.name}
                   <Button type="submit" variant="danger" onClick={() => handleRemoveAppliance(x.name)}>
                     Remove
@@ -154,20 +166,23 @@ const PowerUsageScreen = () => {
             );
           })}
         </div>
-        {inverterNeeded && <div style={{ fontSize: 20, color: "red" }}>You'll need an inverter!</div>}
+        {inverterNeeded && (
+          <div style={{ fontSize: 20, color: "red", paddingBottom: 15 }}>You'll need an inverter!</div>
+        )}
       </div>
 
-      <div>
+      <div style={styleClasses.questionContainer}>
         <div>
-          How long do you plan to keep your campervan or overlander for?* This influences the type of battery we will
-          recommend for you.
+          <h5>How long do you plan to keep your campervan or overlander for?</h5>
+          <h6>* This influences the type of battery we will recommend for you.</h6>
         </div>
         <div>
           <Form>
-            <div key={`stacked-radio`} className="mb-3">
+            <div className="mb-3">
               {vanlifeTimeData.map((item) => {
                 return (
                   <Form.Check
+                    key={`${item.label}-time`}
                     label={`${item.label} years`}
                     name="group-1"
                     type="radio"
@@ -181,19 +196,23 @@ const PowerUsageScreen = () => {
         </div>
       </div>
 
-      <div>
+      <div style={styleClasses.questionContainer}>
         <div>
-          How often will you use your campervan or overlander?* This influences the size of battery we will recommend
-          for you. Pick whichever option most closely matches your usage.
+          <h5>How often will you use your campervan or overlander?</h5>
+          <h6>
+            * This influences the size of battery we will recommend for you. Pick whichever option most closely matches
+            your usage.
+          </h6>
         </div>
         <div>
           <Form>
-            <div key={`stacked-radio`} className="mb-3">
+            <div className="mb-3">
               {vanlifeFrequencyData.map((item) => {
                 return (
                   <Form.Check
+                    key={item.key}
                     label={item.label}
-                    name="group-1"
+                    name="group-2"
                     type="radio"
                     id={item.key}
                     onChange={() => dispatch({ type: SET_VANLIFE_FREQUENCY, payload: item.label })}
@@ -205,20 +224,24 @@ const PowerUsageScreen = () => {
         </div>
       </div>
 
-      <div>
+      <div style={styleClasses.questionContainer}>
         <div>
-          Which statement best describes your typical usage?* Please note: including shore hook up in your system will
-          increase your total cost, as it requires a MultiPlus which is an inverter and a battery charger in one. This
-          also has a knock on effect to associated components.
+          <h5>Which statement best describes your typical usage?</h5>
+          <h6>
+            * Please note: including shore hook up in your system will increase your total cost, as it requires a
+            MultiPlus which is an inverter and a battery charger in one. This also has a knock on effect to associated
+            components.
+          </h6>
         </div>
         <div>
           <Form>
-            <div key={`stacked-radio`} className="mb-3">
+            <div className="mb-3">
               {vanlifeTypicalUsageData.map((item) => {
                 return (
                   <Form.Check
+                    key={item.key}
                     label={item.label}
-                    name="group-1"
+                    name="group-3"
                     type="radio"
                     id={item.key}
                     onChange={() => dispatch({ type: SET_VANLIFE_USAGE, payload: item.label })}

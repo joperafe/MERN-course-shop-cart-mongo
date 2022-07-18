@@ -1,4 +1,3 @@
-import { startSession } from "mongoose";
 import {
   ADD_APPLIANCE,
   REMOVE_APPLIANCE,
@@ -47,15 +46,8 @@ export const nomadicFormReducer = (
         ...state,
         totalWattage: calcWattage,
         inverterNeeded: findInverterNeed,
-        // totalWattage: state.appliancesList.forEach((x) => {
-        //   console.log("X ", x, state.totalWattage);
-        //   return x.watts + state.totalWattage;
-        // }),
       };
     case ADD_OTHER_APPLIANCES:
-      const content = action.payload;
-      const wattage = content;
-      const name = "0";
       return {
         ...state,
         otherAppliances: action.payload,

@@ -19,6 +19,7 @@ import ProductListScreen from "./screens/ProductLisScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import OrderListScreen from "./screens/OrderListScreen";
 import NomadicFormScreen from "./screens/NomadicForm/NomadicFormScreen";
+// import LayoutScreen from "./screens/layoutCreator/LayoutScreen";
 
 const App = () => {
   return (
@@ -54,3 +55,4 @@ const App = () => {
 };
 
 export default App;
+// <Route path="/layout-drawer" component={LayoutScreen} exact />
